@@ -1,0 +1,16 @@
+  <header>
+    <nav class="navbar navbar-light bg-light">
+    <%= render "nav" %>
+    <%= link_to 'Back', root_path, :class => 'btn btn-outline-info' %>
+    </nav>
+  </header>
+  <br>
+
+  <h1><%= @question.title %></h1>
+  <hr>
+  <h5><%= @question.user.username %></h5><br>
+  <p><%= @question.body %></p>
+  <hr>
+    <% @question.answers.each do |answer| %>
+      <%= answer.body %>
+    <% end %>

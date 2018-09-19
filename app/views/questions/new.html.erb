@@ -1,0 +1,41 @@
+  <header>
+    <nav class="navbar navbar-light bg-light">
+    <%= render "nav" %>
+    <%= link_to 'Back', root_path, :class => 'btn btn-outline-info' %>
+    </nav>
+  </header>
+  <br>
+
+<h1>New question page</h1>
+
+
+<%= form_with scope: :question, url: questions_path, local: true do |form| %>
+
+    <% if @question.errors.any? %>
+        <div class="alert alert-danger" role="alert">
+            <h4>
+                <%= pluralize(@question.errors.count, "error") %>
+                prohibited this question from being saved:
+            </h4>
+            <ul>
+                <% @question.errors.full_messages.each do |msg| %>
+                    <li><h5><%= msg %></h5></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+<h1 class = "input-block col-md-3">New Question</h1>
+  <div class="input-block col-md-3">
+    <%= form.text_field :title, :class => 'form-control', :placeholder => 'Question Title' %>
+  </div> <br>
+  <div  class="input-block col-md-3">
+    <%= form.text_area :body, :class => 'form-control', :placeholder => 'Question description here' %>
+  </div> <br>
+  <div  class="input-block col-md-3">
+  <%= form.submit "Create Question", :class => "btn btn-outline-success" %>
+  </div>
+  <%= form.hidden_field :user_id, :value => current_user.id %>
+
+
+
+<% end %>
