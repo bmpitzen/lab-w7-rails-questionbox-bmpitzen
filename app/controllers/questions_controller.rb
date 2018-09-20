@@ -28,6 +28,9 @@ class QuestionsController < ApplicationController
     @questions = Question
     .where(user_id: current_user.id)
   end
+  def edit
+    @question = Question.find(params[:id])
+  end
 
 
 

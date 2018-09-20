@@ -1,1 +1,15 @@
-<h1>my questions</h1>
+<div class="body">
+  
+  <h1>Your Questions</h1>
+  <% @questions.each do |question| %>
+      <h3 class="question-title"><%= link_to question.title, question_path(question) %></h3>
+      <p class="question-text"><%= question.body%></p>
+      <% if current_user == question.user %>
+        <%= link_to 'Edit', edit_question_path(question), :class => "btn btn-outline-info" %>
+        <%= link_to "Delete", question, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %>
+      <% end %>
+      Created by: 
+      <%= link_to User.find(question.user_id).username, user_path(current_user)%>
+  <% end %>
+
+</div>
