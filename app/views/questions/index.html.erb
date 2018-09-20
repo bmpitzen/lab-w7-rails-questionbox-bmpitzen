@@ -1,35 +1,34 @@
+<div class="body mx-auto">
   <% @questions.each do |question| %>
-      <h3 class="question-title"><%= link_to question.title, question_path(question) %></h3>
-      <p class="question-text"><%= question.body%></p>
-      <hr>
-      <h5>Answers</h5>
-      <div class="answer">
-        <% question.answers.each do |answer| %>
-          <dl>
-          <dt><%= answer.body %></dt>
-          <dd><%= link_to answer.user.username, user_path(answer.user_id)%></dd>
-          </dl>
-        <% end %>
-      </div>
-      <% if current_user == question.user %>
-        <%= link_to 'Edit', edit_question_path(question), :class => "btn btn-outline-info" %>
-        <%= link_to "Delete", question, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %>
-      <% end %>
-      <p>Created by: 
-      <%= link_to User.find(question.user_id).username, user_path([:id])%>
-      </p>
-  <% end %>
+  <div class="card">
+    <div class="card-body">
+          <h3 class="card-title"><%= link_to question.title, question_path(question) %></h3>
+          <h6 class="card-subtitle mb-2 text-muted">Asked by: 
+            <%= link_to User.find(question.user_id).username, user_path([:id])%>
+          </h6>
+          <p class="question-text"><%= question.body%></p>
+          <hr>
+          <div class="answer">
+            <% if question.answers.present?%>
+              <h5>Answers</h5>
+            <% end %>
+            <% question.answers.each do |answer| %>
+              <dl>
+              <dt><%= answer.body %></dt>
+              <dd>Answer from: <%= link_to answer.user.username, user_path(answer.user_id)%></dd>
+              </dl>
+            <% end %>
+          </div>
+          <% if current_user == question.user %>
+            <%= link_to 'Edit', edit_question_path(question), :class => "btn btn-outline-info" %>
+            <%= link_to "Delete", question, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %>
+          <% end %>
+          <% if current_user%>
+            <%= link_to 'Answer', new_answer_path, :class => "btn btn-outline-success"%>
+          <%end%>
 
-
-<div>
-<% @questions.each do |question| %>
-<h1><%= question.title %></h1>
-<hr>
-<h5><%= question.user.username %></h5><br>
-<p><%= question.body %></p>
-<hr>
-  <% question.answers.each do |answer| %>
-    <%= answer.body %>
+    </div>
+  </div>
+    
   <% end %>
-<% end %>
 </div>

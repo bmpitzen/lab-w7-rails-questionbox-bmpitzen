@@ -1,8 +1,22 @@
-  <h1><%= @question.title %></h1>
-  <hr>
-  <h5><%= @question.user.username %></h5><br>
-  <p><%= @question.body %></p>
-  <hr>
-    <% @question.answers.each do |answer| %>
-      <%= answer.body %>
-    <% end %>
+<div class="body">
+        <h3 class="question-title"><%= link_to @question.title, question_path(@question) %></h3>
+        <p class="question-text"><%= @question.body%></p>
+        <p>Asked by: 
+        <%= link_to User.find(@question.user_id).username, user_path([:id])%>
+        </p>
+        <hr>
+        <h5>Answers</h5>
+        <div class="answer">
+          <% @question.answers.each do |answer| %>
+            <dl>
+            <dt><%= answer.body %></dt>
+            <dd>Answer from: <%= link_to answer.user.username, user_path(answer.user_id)%></dd>
+            </dl>
+            <hr>
+          <% end %>
+        </div>
+        <% if current_user == @question.user %>
+          <%= link_to 'Edit', edit_question_path(@question), :class => "btn btn-outline-info" %>
+          <%= link_to "Delete", @question, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger" %>
+        <% end %>
+</div>

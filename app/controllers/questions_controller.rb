@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
   def index
     @questions = Question.all
   end
@@ -30,6 +31,13 @@ class QuestionsController < ApplicationController
   end
   def edit
     @question = Question.find(params[:id])
+  end
+  def destroy
+    @question.destroy
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Question was successfully deleted.' }
+      format.json { head :no_content }
+    end
   end
 
 
